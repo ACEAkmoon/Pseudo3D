@@ -19,21 +19,21 @@ struct Line
 	//from world to screen coordinates
 	void project(int camX, int camY, int camZ)
 	{
-		scale = camD/(z-camZ);
+		scale = camD / (z - camZ);
 		X = (1 + scale * (x - camX)) * width / 2;
 		Y = (1 - scale * (y - camY)) * height / 2;
 		W = scale * roadW * width / 2;
 	}
 };
  
-void drawQuad (RenderWindow &w, Color c,float x1,float y1,float w1,float x2,float y2,float w2)
+void drawQuad (RenderWindow &w, Color c, float x1, float y1, float w1, float x2, float y2, float w2)
 {
 	ConvexShape shape(4);
 	shape.setFillColor(c);
-	shape.setPoint(0, Vector2f(x1-w1,y1));
-	shape.setPoint(1, Vector2f(x2-w2,y2));
-	shape.setPoint(2, Vector2f(x2+w2,y2));
-	shape.setPoint(3, Vector2f(x1+w1,y1));
+	shape.setPoint(0, Vector2f(x1 - w1, y1));
+	shape.setPoint(1, Vector2f(x2 - w2, y2));
+	shape.setPoint(2, Vector2f(x2 + w2, y2));
+	shape.setPoint(3, Vector2f(x1 + w1, y1));
 	w.draw(shape);
 }
 
@@ -45,7 +45,7 @@ int main ()
 
 	vector<Line> lines;
 
-	for (int i=0; i<1600; i++)
+	for (int i = 0; i < 1600; i++)
 	{
 		Line line;
 		line.z = i * segL;
@@ -54,6 +54,7 @@ int main ()
 	}
 
 	int N = lines.size();
+	int pos = 200;
 
 	while (app.isOpen())
 	{
@@ -61,24 +62,31 @@ int main ()
 		while (app.pollEvent(e))
 		{
 			if (e.type == Event::Closed)
-			{
 				app.close();
-			}
 		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Up)) 
+			pos += 200;
+		if (Keyboard::isKeyPressed(Keyboard::Down)) 
+			pos -= 200;
+
+
 		app.clear();
+		int startPos = pos / segL;
+
 		//drawQuad(app, Color::Color(41,95,19,255), 500, 500, 200, 500, 300, 100);
 
-			////////draw road////////
-		for (int n = 0; n < 300; n++)
+		//////////draw road//////////
+		for (int n = startPos; n < startPos + 300; n++)
 		{
-			Line &l = lines[n%N];
-			l.project(0, 1500, 0);
+			Line &l = lines[n % N];
+			l.project(0, 1500, pos);
 
-			Color grass		= (n / 3) %2 ? Color(16, 200, 16) : Color(0, 154, 0);
-			Color rumble	= (n / 3) %2 ? Color(255, 255, 255) : Color(0, 0, 0);
-			Color road		= (n / 3) %2 ? Color(107, 107, 107) : Color(105, 105, 105);
+			Color grass		= (n / 3) % 2 ? Color(16, 200, 16)	: Color(0, 154, 0);
+			Color rumble	= (n / 3) % 2 ? Color(255, 255, 255) : Color(0, 0, 0);
+			Color road		= (n / 3) % 2 ? Color(107, 107, 107) : Color(105, 105, 105);
 
-			Line p = lines[(n - 1) %N]; //previous line
+			Line p = lines[(n - 1) % N]; //previous line
 
 			drawQuad(app, grass,	0,	p.Y, width, 0, l.Y, width);
 			drawQuad(app, rumble,	p.X, p.Y, p.W * 1.2, l.X, l.Y, l.W * 1.2);

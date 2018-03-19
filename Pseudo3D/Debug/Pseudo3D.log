@@ -1,12 +1,15 @@
-﻿Сборка начата 19.03.2018 3:13:28.
+﻿Сборка начата 19.03.2018 5:11:22.
      1>Проект "D:\Project\projectVS\Pseudo3D\Pseudo3D\Pseudo3D.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"D:\Libraries\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D SFML_DYNAMIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
      1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(9): warning C4305: инициализация: усечение из "double" к "float"
-     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(51): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(91): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(92): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(56): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(59): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(87): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(95): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(108): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+     1>d:\project\projectvs\pseudo3d\pseudo3d\main.cpp(109): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Project\projectVS\Pseudo3D\Debug\Pseudo3D.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\Libraries\SFML-2.3.2\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Project\projectVS\Pseudo3D\Debug\Pseudo3D.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Project\projectVS\Pseudo3D\Debug\Pseudo3D.lib" /MACHINE:X86 Debug\main.obj
          Pseudo3D.vcxproj -> D:\Project\projectVS\Pseudo3D\Debug\Pseudo3D.exe
@@ -14,4 +17,4 @@
 
 Сборка успешно завершена.
 
-Затраченное время: 00:00:01.09
+Затраченное время: 00:00:00.97

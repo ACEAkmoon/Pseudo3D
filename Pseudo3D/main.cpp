@@ -12,9 +12,9 @@ struct Line
 {
 	float x, y, z; //3D center of line
 	float X, Y, W; // screen coord
-	float scale;
+	float scale, curve;
 
-	Line() {x=y=z=0;}
+	Line() {curve=x=y=z=0;}
 
 	//from world to screen coordinates
 	void project(int camX, int camY, int camZ)
@@ -43,6 +43,11 @@ int main ()
 	RenderWindow app (VideoMode(width, height), "Pseudo3DRacing");
 	app.setFramerateLimit(60);
 
+	Texture bg;
+	bg.loadFromFile("images/bg.jpg");
+	bg.setRepeated(true);
+	Sprite sBackground(bg);
+
 	vector<Line> lines;
 
 	for (int i = 0; i < 1600; i++)
@@ -50,29 +55,36 @@ int main ()
 		Line line;
 		line.z = i * segL;
 
+		if (i > 300 && i < 700) line.curve = 0.5;
+		if (i > 750) line.y  = sin(i / 30.0) * 1500;
+
 		lines.push_back(line);
 	}
 
 	int N = lines.size();
-	int pos = 200;
+	int pos = 0;
+	float playerX = 0;
 
 	while (app.isOpen())
 	{
 		Event e;
 		while (app.pollEvent(e))
-		{
 			if (e.type == Event::Closed)
 				app.close();
-		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Up)) 
-			pos += 200;
-		if (Keyboard::isKeyPressed(Keyboard::Down)) 
-			pos -= 200;
+		if (Keyboard::isKeyPressed(Keyboard::Up)) pos += 200;
+		if (Keyboard::isKeyPressed(Keyboard::Down)) pos -= 200;
+		if (Keyboard::isKeyPressed(Keyboard::Left)) playerX -= 200;
+		if (Keyboard::isKeyPressed(Keyboard::Right)) playerX += 200;
 
+		while (pos >= N * segL) pos -= N * segL;
+		while (pos < 0) pos += N * segL;
 
 		app.clear();
 		int startPos = pos / segL;
+		float camH = 1500 + lines[startPos].y;
+		float x = 0, dx = 0;
+		float maxy = height;
 
 		//drawQuad(app, Color::Color(41,95,19,255), 500, 500, 200, 500, 300, 100);
 
@@ -80,7 +92,12 @@ int main ()
 		for (int n = startPos; n < startPos + 300; n++)
 		{
 			Line &l = lines[n % N];
-			l.project(0, 1500, pos);
+			l.project(playerX - x, camH, pos - (n >= N ? segL : 0));
+			x += dx;
+			dx += l.curve;
+
+			if (l.Y >= maxy) continue;
+			maxy = l.Y;
 
 			Color grass		= (n / 3) % 2 ? Color(16, 200, 16)	: Color(0, 154, 0);
 			Color rumble	= (n / 3) % 2 ? Color(255, 255, 255) : Color(0, 0, 0);
@@ -88,7 +105,7 @@ int main ()
 
 			Line p = lines[(n - 1) % N]; //previous line
 
-			drawQuad(app, grass,	0,	p.Y, width, 0, l.Y, width);
+			drawQuad(app, grass,	0, p.Y, width, 0, l.Y, width);
 			drawQuad(app, rumble,	p.X, p.Y, p.W * 1.2, l.X, l.Y, l.W * 1.2);
 			drawQuad(app, road,		p.X, p.Y, p.W, l.X, l.Y, l.W);
 		}
